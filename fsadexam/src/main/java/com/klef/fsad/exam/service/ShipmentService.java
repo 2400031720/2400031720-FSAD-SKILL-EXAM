@@ -5,6 +5,8 @@ import com.klef.fsad.exam.repository.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ShipmentService {
 
@@ -15,8 +17,9 @@ public class ShipmentService {
         return shipmentRepository.save(shipment);
     }
 
-    public Shipment updateShipment(Integer id, Shipment shipment) {
-        if (shipmentRepository.existsById(id)) {
+    public Shipment updateShipment(Long id, Shipment shipment) {
+        Optional<Shipment> existingShipment = shipmentRepository.findById(id);
+        if (existingShipment.isPresent()) {
             shipment.setShipmentId(id);
             return shipmentRepository.save(shipment);
         }
